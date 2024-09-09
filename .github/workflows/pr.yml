@@ -32,7 +32,7 @@ jobs:
       - name: Comment and close PR if not enough lines
         if: ${{ env.LINES < 100 }}
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body "Not enough lines of code"
+          gh pr comment ${{ github.event.pull_request.number }} --body "This PR does not meet the minimum requirement of 100 lines of code. You have a total of ${{ env.LINES }} lines. Please add more lines to proceed."
           gh pr close ${{ github.event.pull_request.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
