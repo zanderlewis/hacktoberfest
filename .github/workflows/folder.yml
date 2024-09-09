@@ -15,7 +15,7 @@ jobs:
       - name: Create year folder and subfolders with .gitkeep
         run: |
           YEAR=$(date +%Y)
-          mkdir -p $YEAR/{C,Python,PHP}
+          mkdir -p $YEAR/{C,Python,PHP,Java,Javascript,Typescript,CPP,CSharp,Rust,Kotlin,Dart,Fortran,Forth,Lisp,Julia,Mojo,Bend,Zig}
           touch $YEAR/C/.gitkeep
           touch $YEAR/Python/.gitkeep
           touch $YEAR/PHP/.gitkeep
