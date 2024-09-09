@@ -42,13 +42,6 @@ jobs:
             touch $YEAR/$folder/@/.gitkeep
           done
 
-      - name: Sort Folders
-        run: |
-          YEAR=$(date +%Y)
-          for dir in $(ls -d $YEAR/* | sort); do
-            mv "$dir" "$YEAR/$(basename "$dir")"
-          done
-
       - name: Commit changes
         run: |
           git config --global user.name 'github-actions[bot]'
