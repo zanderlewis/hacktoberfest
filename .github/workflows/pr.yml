@@ -26,7 +26,7 @@ jobs:
       - name: Check lines of code
         id: loc
         run: |
-          LINES=$(jq '.additions + .deletions' <<< "${{ steps.pr.outputs.result }}")
+          LINES=$(echo '${{ steps.pr.outputs.result }}' | jq '.additions + .deletions')
           echo "LINES=$LINES" >> $GITHUB_ENV
 
       - name: Comment and close PR if not enough lines
