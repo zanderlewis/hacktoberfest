@@ -21,12 +21,12 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-            return pr.data;
+            return { additions: pr.data.additions, deletions: pr.data.deletions };
 
       - name: Check lines of code
         id: loc
         run: |
-          LINES=$(echo '${{ steps.pr.outputs.result }}' | jq '.additions + .deletions')
+          LINES=$(( ${{ steps.pr.outputs.additions }} + ${{ steps.pr.outputs.deletions }} ))
           echo "LINES=$LINES" >> $GITHUB_ENV
 
       - name: Comment and close PR if not enough lines
@@ -36,4 +36,3 @@ jobs:
           gh pr close ${{ github.event.pull_request.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINES: ${{ env.LINES }}
