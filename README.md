@@ -4,7 +4,7 @@ Participate in Hacktoberfest! Scripts submitted must have quality.
 ## How to contribute
 1. Fork this repository
 2. Create a new script
-    a. Add a new script in the respective folder (C, Python, PHP)
+    a. Add a new script in the respective folder (C, Python, PHP, etc.)
     b. Make sure the script is working and 100+ lines
     c. Add a comment at the top of the script with the following information:
         - Author
