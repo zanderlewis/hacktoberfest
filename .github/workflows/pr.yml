@@ -1,0 +1,39 @@
+name: Auto Close PRs with Insufficient Lines
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  auto-close:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get PR details
+        id: pr
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const pr = await github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+            return pr.data;
+
+      - name: Check lines of code
+        id: loc
+        run: |
+          LINES=$(jq '.additions + .deletions' <<< "${{ steps.pr.outputs.result }}")
+          echo "LINES=$LINES" >> $GITHUB_ENV
+
+      - name: Comment and close PR if not enough lines
+        if: ${{ env.LINES < 100 }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "Not enough lines of code"
+          gh pr close ${{ github.event.pull_request.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINES: ${{ env.LINES }}

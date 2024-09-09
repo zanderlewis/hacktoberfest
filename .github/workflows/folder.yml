@@ -1,0 +1,29 @@
+name: Create Yearly Folders
+
+on:
+  schedule:
+    - cron: '0 0 1 9 *'  # Runs at midnight on the first of September every year
+  workflow_dispatch:
+
+jobs:
+  create-folders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create year folder and subfolders with .gitkeep
+        run: |
+          YEAR=$(date +%Y)
+          mkdir -p $YEAR/{C,Python,PHP}
+          touch $YEAR/C/.gitkeep
+          touch $YEAR/Python/.gitkeep
+          touch $YEAR/PHP/.gitkeep
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "Create folders and .gitkeep files for $YEAR"
+          git push
