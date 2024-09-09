@@ -1,5 +1,5 @@
 # hacktoberfest
-Participate in Hacktoberfest! Scripts submitted must have quality. [ C | Python | PHP ]
+Participate in Hacktoberfest! Scripts submitted must have quality.
 
 ## How to contribute
 1. Fork this repository
@@ -19,9 +19,9 @@ Participate in Hacktoberfest! Scripts submitted must have quality. [ C | Python 
 ## Rules
 1. The script must be working
 2. The script must be 100+ lines
-3. The script must be in C, Python or PHP
+3. The script must be in C, Python, PHP, or any other language.
 4. The script must have quality
 5. The script must be original
-6. The script must be added to the respective folder (C, Python, PHP)
+6. The script must be added to the respective folder (C, Python, PHP, etc.)
 7. No spamming
 8. No offensive content
