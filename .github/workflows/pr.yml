@@ -29,6 +29,15 @@ jobs:
           LINES=$(( ${{ steps.pr.outputs.additions }} + ${{ steps.pr.outputs.deletions }} ))
           echo "LINES=$LINES" >> $GITHUB_ENV
 
+      - name: Check date and close PR if not in October
+        run: |
+          CURRENT_MONTH=$(date +%m)
+          if [ "$CURRENT_MONTH" -ne 10 ]; then
+            gh pr comment ${{ github.event.pull_request.number }} --body "This PR is being closed because it is not submitted in October."
+            gh pr close ${{ github.event.pull_request.number }}
+            exit 0
+          fi
+
       - name: Comment and close PR if not enough lines
         if: ${{ env.LINES < 100 }}
         run: |
