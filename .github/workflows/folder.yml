@@ -15,10 +15,39 @@ jobs:
       - name: Create year folder and subfolders with .gitkeep
         run: |
           YEAR=$(date +%Y)
-          mkdir -p $YEAR/{C,Python,PHP,Java,Javascript,Typescript,CPP,CSharp,Rust,Kotlin,Dart,Fortran,Forth,Lisp,Julia,Mojo,Bend,Zig}
-          touch $YEAR/C/.gitkeep
-          touch $YEAR/Python/.gitkeep
-          touch $YEAR/PHP/.gitkeep
+          mkdir -p $YEAR
+          
+          # Main folders
+          MAIN_FOLDERS=(C Python PHP Java Javascript Typescript CPP CSharp Rust Kotlin Dart Fortran Forth Lisp Julia Mojo Bend Zig Crystal CUDA Assembly Shell Swift Go Scala Perl Ruby HTML CSS)
+          for folder in "${MAIN_FOLDERS[@]}"; do
+            mkdir -p $YEAR/$folder
+            touch $YEAR/$folder/.gitkeep
+          done
+
+          # Subfolders a-z
+          for folder in "${MAIN_FOLDERS[@]}"; do
+            for i in {a..z}; do
+              mkdir -p $YEAR/$folder/$i
+              touch $YEAR/$folder/$i/.gitkeep
+            done
+          done
+
+          # Subfolders 0-9 and other characters
+          for folder in "${MAIN_FOLDERS[@]}"; do
+            for i in {0..9}; do
+              mkdir -p $YEAR/$folder/$i
+              touch $YEAR/$folder/$i/.gitkeep
+            done
+            mkdir -p $YEAR/$folder/@
+            touch $YEAR/$folder/@/.gitkeep
+          done
+
+      - name: Sort Folders
+        run: |
+          YEAR=$(date +%Y)
+          for dir in $(ls -d $YEAR/* | sort); do
+            mv "$dir" "$YEAR/$(basename "$dir")"
+          done
 
       - name: Commit changes
         run: |
