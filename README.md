@@ -1,4 +1,4 @@
-# hacktoberfest
+# hacktoberfest - [ ACTIVE ]
 Participate in Hacktoberfest! Scripts submitted must have quality.
 
 ## How to contribute
